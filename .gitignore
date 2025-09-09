@@ -1,0 +1,12 @@
+
+# Arquivos de cache
+__pycache__/
+*.pyc
+
+# Para o ambiente
+venv/
+.venv/
+.env
+
+# Arquivos temporários
+*.log
