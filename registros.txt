@@ -1,0 +1,12 @@
+JÁ FOI FEITO:
+    A lógica e funcionamento do jogo está pronta e testa.
+
+O que falta:
+    GameManager -> ConnetionHandler -> Server -> Client -> Testar -> FIM
+
+Atual: GameManager, serializadores
+
+Parece estar tudo feito do GameManager.
+É preciso agora apenas testar.
+
+Criar as funções para serializar e deserializar mensagens.
