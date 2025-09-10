@@ -1,4 +1,7 @@
 
+class ClientConnectionError(Exception):
+    pass
+
 class GameEndsError(Exception):
     pass
 

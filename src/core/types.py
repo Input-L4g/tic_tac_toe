@@ -26,7 +26,14 @@ GameBoard: TypeAlias = List[Optional[int]]
 SystemComunication: TypeAlias = Union[GameWarning, ServerWarning, GameError]
 ValidationResult: TypeAlias = Union[GameWarning, GameError]
 SystemWarning: TypeAlias = Union[GameWarning, ServerWarning]
-MessageType: TypeAlias = Union[GameActions, str]
+MessageType: TypeAlias = Union[GameActions, SystemComunication, str]
+ResponseCode: TypeAlias = Literal[0, 1000, 1001, 1002, 1003, 1004]
+
+
+class ResponseMessage(TypedDict):
+    code: ResponseCode
+    message: Optional[str]
+    traceback: Optional[Exception]
 
 class GameSymbolsProtocol(Protocol): # pylint: disable=too-few-public-methods
     CROSS: Literal['x']

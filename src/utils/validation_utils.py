@@ -21,8 +21,8 @@ def was_message_successful(
 
 def was_successful(
     entry: Any,
-    expected_entry: Any = GameWarning.OK,
-    operator: Literal["==", "is"] = "=="
+    expected_entry: Any = None,
+    operator: Literal["==", "is", "in"] = "=="
     ) -> bool:
     """
     Verifica se uma entrada é igual ou tem identidade igual
@@ -31,7 +31,8 @@ def was_successful(
     Args:
         entry (Any): Entrada que será validada.
         expected_entry (Any): Entrada esperada.
-            Por padrão é GameWarning.OK.
+            Por padrão é None, se None, usa a seguintes lista
+            para comparar:
         operator (str): Indica qual operador usar na validação.
             Pode ser apenas "==" ou "is". Por padrão é "==".
 
@@ -39,6 +40,16 @@ def was_successful(
         bool: True para entrada válida, False para
             inválida.
     """
-    if operator == "is":
-        return entry is expected_entry
-    return entry == expected_entry
+    if operator == "in":
+        return entry in expected_entry
+
+    if expected_entry is None:
+        expected_entry = [GameWarning.OK, 0, True]
+    else:
+        expected_entry = [expected_entry]
+
+    if entry not in expected_entry:
+        if operator == "is":
+            return any(entry is i for i in expected_entry)
+        return any(entry == i for i in expected_entry)
+    return False

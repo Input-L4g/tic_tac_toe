@@ -1,21 +1,13 @@
-from typing import Union, TypeAlias
-from src.protocols.enums import (
-    GameActions,
-    GameWarning,
-    GameStatus,
-    ServerWarning
-)
-from src.protocols.errors import GameError
-from src.core.types import PayLoad, SystemMessage
 from enum import Enum
-
-MessageType: TypeAlias = Union[
-    GameStatus,
-    GameActions,
-    GameWarning,
-    ServerWarning,
-    GameError
-]
+from typing import Optional
+from src.core.config import RESPONSE_MESSAGES
+from src.core.types import (
+    PayLoad,
+    SystemMessage,
+    MessageType,
+    ResponseCode,
+    ResponseMessage
+)
 
 def create_message(
     msg_type: MessageType,
@@ -37,3 +29,22 @@ def create_message(
     if isinstance(msg_type, Enum):
         type_ = msg_type.value
     return {"type": type_, "payload": payload}
+
+def create_error_message(
+        error_code: ResponseCode,
+        traceback: Optional[Exception] = None
+    ) -> ResponseMessage:
+    """
+    Cria uma mensagem de erro.
+
+    Args:
+        error_code (ResponseCode): Código do erro.
+
+    Returns:
+        ErrorMessage: Mensagem de erro formatada.
+    """
+    return {
+        "code": error_code,
+        "message": RESPONSE_MESSAGES.get(error_code),
+        "traceback": traceback
+        }
